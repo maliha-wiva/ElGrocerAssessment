@@ -20,6 +20,8 @@ protocol HomeViewModelProtocol {
 }
 
 class HomeViewModel: HomeViewModelProtocol {
+    // MARK: - Published Properties
+
     @Published private(set) var banners: [Banner] = [] {
         didSet {
             print("Banners property updated: \(banners)")
@@ -36,13 +38,25 @@ class HomeViewModel: HomeViewModelProtocol {
         }
     }
     @Published private(set) var error: Error?
+    // MARK: - Public Publishers
 
     var bannersPublisher: Published<[Banner]>.Publisher { $banners }
     var categoriesPublisher: Published<[Category]>.Publisher { $categories }
     var productsPublisher: Published<[Product]>.Publisher { $products }
     var errorPublisher: Published<Error?>.Publisher { $error }
-    
-    
+    // MARK: - Dependencies
+        private let bannerService: BannerServiceProtocol
+        private let categoryService: CategoryServiceProtocol
+        private let productService: ProductServiceProtocol
+
+        // MARK: - Init
+        init(bannerService: BannerServiceProtocol,
+             categoryService: CategoryServiceProtocol,
+             productService: ProductServiceProtocol) {
+            self.bannerService = bannerService
+            self.categoryService = categoryService
+            self.productService = productService
+        }
 
     func fetchData() {
         fetchBanners()
@@ -51,38 +65,41 @@ class HomeViewModel: HomeViewModelProtocol {
     }
 
     private func fetchBanners() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            self.banners = [
-                Banner(id: 1, imageUrl: "https://picsum.photos/800/300?random=1"),
-                Banner(id: 2, imageUrl: "https://picsum.photos/800/300?random=2"),
-                Banner(id: 3, imageUrl: "https://picsum.photos/800/300?random=3"),
-                Banner(id: 4, imageUrl: "https://picsum.photos/800/300?random=4"),
-                Banner(id: 5, imageUrl: "https://picsum.photos/800/300?random=5"),
-                Banner(id: 6, imageUrl: "https://picsum.photos/800/300?random=6")
-            ]
-        }
-    }
-
-    private func fetchCategories() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
-            self.categories = [
-                Category(id: 1, name: "Fresh Fruits", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 2, name: "Fresh Vegetables", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 3, name: "Dairy & Eggs", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 4, name: "Meat & Poultry", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 5, name: "Bakery", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 6, name: "Beverages", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 7, name: "Snacks & Chips", imageUrl: "https://picsum.photos/200/200?random=1"),
-                Category(id: 8, name: "Frozen Foods", imageUrl: "https://picsum.photos/200/200?random=1")
-            ]
-        }
-    }
-
-    private func fetchProducts() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-            self.products = (1...20).map {
-                Product(id: $0, name: "Product \($0)", price: Double($0) * 10, imageUrl: "product\($0).jpg")
+            bannerService.fetchBanners { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let banners):
+                        self?.banners = banners
+                    case .failure(let error):
+                        self?.error = error
+                    }
+                }
             }
         }
-    }
+
+        private func fetchCategories() {
+            categoryService.fetchCategories { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let categories):
+                        self?.categories = categories
+                    case .failure(let error):
+                        self?.error = error
+                    }
+                }
+            }
+        }
+
+        private func fetchProducts() {
+            productService.fetchProducts { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let products):
+                        self?.products = products
+                    case .failure(let error):
+                        self?.error = error
+                    }
+                }
+            }
+        }
 }

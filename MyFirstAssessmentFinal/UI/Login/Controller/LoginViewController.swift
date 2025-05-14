@@ -85,10 +85,25 @@ class LoginViewController: UIViewController {
     }
 
     private func navigateToHome() {
-        let homeViewModel: HomeViewModelProtocol = HomeViewModel()
+        // Initialize services (can be replaced with real services in production)
+        let bannerService = MockBannerService()
+        let categoryService = MockCategoryService()
+        let productService = MockProductService()
+
+        // Inject services into ViewModel
+        let homeViewModel: HomeViewModelProtocol = HomeViewModel(
+            bannerService: bannerService,
+            categoryService: categoryService,
+            productService: productService
+        )
+
+        // Initialize HomeViewController with ViewModel
         let homeVC = HomeViewController(viewModel: homeViewModel)
+
+        // Set it as the root of the navigation stack
         navigationController?.setViewControllers([homeVC], animated: true)
     }
+
 
     private func showError(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)

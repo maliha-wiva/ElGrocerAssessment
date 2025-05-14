@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		547A274C2DD3CA6400880C31 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 547A274B2DD3CA5000880C31 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		547A26852DD35AA800880C31 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		547A266E2DD35AA500880C31 /* MyFirstAssessmentFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFirstAssessmentFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		547A26842DD35AA800880C31 /* MyFirstAssessmentFinalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyFirstAssessmentFinalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		547A268E2DD35AA800880C31 /* MyFirstAssessmentFinalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyFirstAssessmentFinalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		547A274B2DD3CA5000880C31 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -37,6 +42,14 @@
 			);
 			target = 547A266D2DD35AA500880C31 /* MyFirstAssessmentFinal */;
 		};
+		547A27612DD4310F00880C31 /* Exceptions for "MyFirstAssessmentFinal" folder in "MyFirstAssessmentFinalTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				UI/Login/Authentication/AuthService.swift,
+				UI/Login/Authentication/AuthServiceProtocol.swift,
+			);
+			target = 547A26832DD35AA800880C31 /* MyFirstAssessmentFinalTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +57,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				547A26962DD35AA800880C31 /* Exceptions for "MyFirstAssessmentFinal" folder in "MyFirstAssessmentFinal" target */,
+				547A27612DD4310F00880C31 /* Exceptions for "MyFirstAssessmentFinal" folder in "MyFirstAssessmentFinalTests" target */,
 			);
 			path = MyFirstAssessmentFinal;
 			sourceTree = "<group>";
@@ -88,6 +102,7 @@
 		547A26652DD35AA500880C31 = {
 			isa = PBXGroup;
 			children = (
+				547A274B2DD3CA5000880C31 /* README.md */,
 				547A26702DD35AA500880C31 /* MyFirstAssessmentFinal */,
 				547A26872DD35AA800880C31 /* MyFirstAssessmentFinalTests */,
 				547A26912DD35AA800880C31 /* MyFirstAssessmentFinalUITests */,
@@ -225,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				547A274C2DD3CA6400880C31 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

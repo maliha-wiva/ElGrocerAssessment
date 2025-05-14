@@ -53,23 +53,14 @@ Structured into 3 distinct sections:
 This app uses **Keychain** to persist authentication tokens for security. However, by default, Keychain data **is not removed** when the app is deleted.
 
 As a result, when the app is reinstalled, it still retrieves the previous token, and directly navigates to the Home screen.
+To reset the app's state and clear the Keychain, i implemented a simple solution.
 
-🛠 **Possible Enhancement (Not Implemented):**
-To handle this in a real-world app, we could combine a `UserDefaults` flag (e.g. `hasLaunchedBefore`) with Keychain logic to detect fresh installs and clear sensitive data accordingly.
-
-This behavior was not implemented to keep the mock assessment focused and concise.
 
 ## Requirements
 - iOS 15.0+
 - Xcode 14.0+
 - Swift 5.0+
 Not added any dependencies, all code is native Swift.
-
-## Screenshots
-| Login Screen | Home Screen |
-
-|:------------:|:-----------:|
-| ![Login Screen](Screenshots/login.png) | ![Home Screen](Screenshots/home.png) |
 
 
 ## Getting Started
@@ -83,9 +74,6 @@ Not added any dependencies, all code is native Swift.
 The current implementation demonstrates key architectural practices including MVVM, programmatic UI with UICollectionViewCompositionalLayout, dependency injection, and secure token storage using Keychain. Below are some areas identified for future improvement:
 
 ### 🔧 Technical Enhancements
-
-- **Fresh Install Detection**  
-  Implement logic using a combination of `UserDefaults` and `Keychain` to detect a fresh install and clear stored credentials accordingly.
 
 - **Authentication Enhancements**  
   Handle token expiration and refresh scenarios for a more robust authentication flow.

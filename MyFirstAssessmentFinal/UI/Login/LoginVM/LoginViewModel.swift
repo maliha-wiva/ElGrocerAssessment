@@ -13,17 +13,19 @@ protocol LoginViewModelProtocol {
     func isUserLoggedIn() -> Bool
 }
 
-import Foundation
-
 class LoginViewModel: LoginViewModelProtocol {
     private let keychainService: KeychainServiceProtocol
     private let validator: ValidatorProtocol
-    private let mockEmail = "test@example.com"
-    private let mockPassword = "password123"
+    private let authService: AuthServiceProtocol
 
-    init(keychainService: KeychainServiceProtocol, validator: ValidatorProtocol) {
+    init(
+        keychainService: KeychainServiceProtocol,
+        validator: ValidatorProtocol,
+        authService: AuthServiceProtocol
+    ) {
         self.keychainService = keychainService
         self.validator = validator
+        self.authService = authService
     }
 
     func validate(email: String, password: String) throws {
@@ -32,13 +34,13 @@ class LoginViewModel: LoginViewModelProtocol {
     }
 
     func login(email: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            if email == self.mockEmail && password == self.mockPassword {
-                self.keychainService.saveToken("mockAuthToken")
+        authService.login(email: email, password: password) { result in
+            switch result {
+            case .success(let token):
+                self.keychainService.saveToken(token)
                 completion(.success(true))
-            } else {
-                completion(.failure(NSError(domain: "Invalid credentials", code: 401, userInfo: nil)))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

@@ -7,7 +7,18 @@
 
 import Foundation
 
+/// A mock implementation of `BannerServiceProtocol` for testing and development purposes.
+///
+/// `MockBannerService` simulates fetching banners by returning a predefined list of `Banner` objects
+/// after a short delay, mimicking a network request.
+///
+/// Use this service in place of a real network service to provide consistent and predictable data during UI development or testing.
 class MockBannerService: BannerServiceProtocol {
+    /// Fetches a list of mock banners asynchronously.
+    ///
+    /// - Parameter completion: A closure called with a result containing either an array of `Banner` objects or an error.
+    ///
+    /// The method simulates a network delay of 1 second before returning the mock data.
     func fetchBanners(completion: @escaping (Result<[Banner], Error>) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
             completion(.success([

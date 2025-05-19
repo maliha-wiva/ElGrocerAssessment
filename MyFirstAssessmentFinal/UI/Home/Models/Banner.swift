@@ -6,9 +6,15 @@
 //
 
 import Foundation
-
+/// A model representing a banner displayed in the home screen.
+///
+/// Each banner has a unique identifier and an image URL to be shown in the UI.
 struct Banner {
+    /// The unique identifier for the banner.
+
     let id: Int
+    /// The URL string of the banner image.
+
     let imageUrl: String
 }
 

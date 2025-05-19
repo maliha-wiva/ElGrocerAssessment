@@ -6,10 +6,20 @@
 //
 
 import UIKit
-
+/// A custom collection view cell for displaying a category with an image and name.
+///
+/// `CategoryCell` presents a category image and its name in a vertically stacked layout.
+/// The image is loaded asynchronously from a URL, and a placeholder is shown if loading fails.
+///
+/// Use this cell in collection views to visually represent categories.
+///
+/// - Note: For production, consider using an image caching library for better performance.
 class CategoryCell: UICollectionViewCell {
+    /// The reuse identifier for the category cell.
+
     static let identifier = "CategoryCell"
-    
+    /// The image view that displays the category image.
+
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
@@ -17,7 +27,8 @@ class CategoryCell: UICollectionViewCell {
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    
+    /// The label that displays the category name.
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -29,7 +40,9 @@ class CategoryCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+    /// Initializes a new category cell with the specified frame.
+    ///
+    /// - Parameter frame: The frame rectangle for the cell, measured in points.
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
@@ -51,11 +64,16 @@ class CategoryCell: UICollectionViewCell {
             nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -6)
         ])
     }
-    
+    /// Required initializer with coder. Not implemented.
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    /// Configures the cell to display the given category.
+    ///
+    /// - Parameter category: The `Category` object containing the name and image URL.
+    ///
+    /// Loads the image asynchronously and sets it to the image view. If loading fails, a placeholder image is shown.
     func configure(with category: Category) {
         nameLabel.text = category.name
         if let url = URL(string: category.imageUrl) {

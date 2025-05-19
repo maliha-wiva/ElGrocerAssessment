@@ -23,7 +23,7 @@ class LoginViewModelTests: XCTestCase {
         viewModel = LoginViewModel(
             keychainService: mockKeychainService,
             validator: mockValidator,
-            authService: mockAuthService
+            authService: mockAuthService as! AuthServiceProtocol
         )
     }
 
